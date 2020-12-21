@@ -73,60 +73,94 @@ optional arguments:
 
 ## Installation
 
-### PySyft
+We assume the AriaNN code has been put at the home directory: `~/ariann`
 
-Download PySyft from GitHub using the `ryffel/ariaNN` branch.
+### 1. PySyft
 
-Install the  dependencies
+Download PySyft from GitHub using the `ryffel/ariaNN` branch and install in editable mode:
 ```
-pip install -r pip-dep/requirements.txt
-```
-
-Install in editable mode:
-```
+cd ~
+git clone https://github.com/OpenMined/PySyft.git
+cd PySyft
+git checkout 0b699987b98da82316efaa481074a3b721806465
 pip install -e .
 ```
+You can already start running the first experiments! Try:
+``` 
+cd ~/ariann
+python main.py --model alexnet --dataset cifar10 --batch_size 128 --preprocess
+```
+But there are still some extras steps to have the whole setup!
 
-### PyGrid (for websockets)
-Download PyGrid from GitHub using the `ryffel/ariaNN` branch..
+### 2. PyGrid (for cross-node execution only)
+To run experiments across  different nodes, download PyGrid from GitHub.
 
-First install poetry 
+```
+cd ~
+git clone https://github.com/OpenMined/PyGrid.git
+cd PyGrid
+git checkout 1ded5901ce643c1abadd23f54cc84b9c25438f5b
+```
+Install poetry 
 ``` 
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 ```
-take a fresh tab and run `poetry install` in apps/node
+**Take a fresh tab**, install with poetry (it might take a minute or two):
+``` 
+cd ~/PyGrid/apps/node
+poetry install
+poetry env info -p
+```
+Copy paste the path output, say `<path>`. Now reinstall manually PySyft in the env.
+```
+source <path>/bin/activate
+cd ~/PySyft
+pip install -e .
+deactivate
+```
 
 ### Experiments setup
 
-Write your PyGrid directory in the ``scripts/launch_***.sh``
+Verify that the paths are correct in ``scripts/launch_***.sh``:
+```
+cd ~/ariann
+nano scripts/launch_alice.sh
+nano scripts/launch_bob.sh
+nano scripts/launch_crypto_provider.sh
+```
+Verify that the `HOME` path is correct:
+``` 
+nano data.py
+```
 
-Define a `HOME` in data.py
-
-You need to install 2 datasets in your `HOME`:
-- Tiny Imagenet, from https://github.com/tjmoon0104/pytorch-tiny-imagenet
+There are 2 datasets that you need to install manually in your `HOME`:
 - Hymenoptera using the instructions:
     ```
+    cd ~
     wget https://download.pytorch.org/tutorial/hymenoptera_data.zip
     unzip hymenoptera_data.zip
     ```
+- Tiny Imagenet, from https://github.com/tjmoon0104/pytorch-tiny-imagenet:
+    ```
+    cd ~
+    git clone https://github.com/tjmoon0104/pytorch-tiny-imagenet.git
+    cd pytorch-tiny-imagenet
+    pip install opencv-python
+    ./run.sh
+    ```
+
+
     
-The working directory is: `cd examples/ariann`
+The working directory is: `cd ~/ariann`
     
     
 ### Troubleshooting with websockets
 
-If the workers launched automatically complain about syft compression codes,
-delete the syft library from the poetry virtual env, active it and install syft 
-in editable mode from your GitHub clone
 
-Example of activating the poetry virtual env:
-```
-source /home/ubuntu/.cache/pypoetry/virtualenvs/openmined.gridnode-L_C_JhA9-py3.6/bin/activate
-```
 
 When you first launch the workers, you might have a SQL error. That's not important, just re-run the experiment and it will be gone.
 
-Also, we recommend always testing an experiment locally before using websockets, to make sure everything runs fine.
+Also, we recommend always testing an experiment locally (ie without `--websockets`) before using websockets, to make sure everything runs fine.
 
 ## Datasets
 
