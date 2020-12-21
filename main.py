@@ -15,10 +15,10 @@ from syft.grid.clients.data_centric_fl_client import DataCentricFLClient
 
 sy.serde.compression.default_compress_scheme = NO_COMPRESSION
 
-from examples.ariann.procedure import train, test
-from examples.ariann.data import get_data_loaders, get_number_classes
-from examples.ariann.models import get_model, load_state_dict
-from examples.ariann.preprocess import build_prepocessing
+from .procedure import train, test
+from .data import get_data_loaders, get_number_classes
+from .models import get_model, load_state_dict
+from .preprocess import build_prepocessing
 
 
 def run(args):
@@ -143,7 +143,9 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "--preprocess", help="[only for speed test] preprocess data or not", action="store_true"
+        "--preprocess",
+        help="[only for speed test] preprocess data or not",
+        action="store_true",
     )
 
     parser.add_argument(

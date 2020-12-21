@@ -4,11 +4,16 @@ import torch
 import torch.nn.functional as F
 from torchvision import datasets, transforms
 
-HOME = "/Users/tryffel/code"
+HOME = "/home/ubuntu"
 
 
 def get_number_classes(dataset):
-    number_classes = {"mnist": 10, "cifar10": 10, "tiny-imagenet": 200, "hymenoptera": 2}
+    number_classes = {
+        "mnist": 10,
+        "cifar10": 10,
+        "tiny-imagenet": 200,
+        "hymenoptera": 2,
+    }
     return number_classes[dataset]
 
 
@@ -62,7 +67,10 @@ def get_data_loaders(args, kwargs, private=True):
 
     elif dataset == "cifar10":
         transformation = transforms.Compose(
-            [transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]
+            [
+                transforms.ToTensor(),
+                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+            ]
         )
         train_dataset = datasets.CIFAR10(
             "../data", train=True, download=True, transform=transformation

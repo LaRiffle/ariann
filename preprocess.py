@@ -241,7 +241,12 @@ def build_prepocessing(model, dataset, batch_size, workers, args):
 
     if args.verbose:
         print(
-            "...", preprocess_time, "s", "[time per item=", preprocess_time / args.batch_size, "]"
+            "...",
+            preprocess_time,
+            "s",
+            "[time per item=",
+            preprocess_time / args.batch_size,
+            "]",
         )
     else:
         print("Preprocessing time (s):\t", round(preprocess_time / args.batch_size, 4))
