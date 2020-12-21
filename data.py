@@ -1,10 +1,9 @@
 import os
 
 import torch
-import torch.nn.functional as F
 from torchvision import datasets, transforms
 
-HOME = "/home/ubuntu"
+HOME = "~"
 
 
 def get_number_classes(dataset):

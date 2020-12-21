@@ -15,10 +15,10 @@ from syft.grid.clients.data_centric_fl_client import DataCentricFLClient
 
 sy.serde.compression.default_compress_scheme = NO_COMPRESSION
 
-from .procedure import train, test
-from .data import get_data_loaders, get_number_classes
-from .models import get_model, load_state_dict
-from .preprocess import build_prepocessing
+from procedure import train, test
+from data import get_data_loaders, get_number_classes
+from models import get_model, load_state_dict
+from preprocess import build_prepocessing
 
 
 def run(args):
