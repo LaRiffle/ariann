@@ -39,35 +39,29 @@ python main.py --model network2 --dataset mnist --train --epochs 15 --lr 0.01
 ### Documentation
 
 ```
-usage: main.py [-h] [--model MODEL] [--dataset DATASET]
-               [--batch_size BATCH_SIZE] [--test_batch_size TEST_BATCH_SIZE]
-               [--preprocess] [--fp_only] [--test] [--train] [--epochs EPOCHS]
-               [--lr LR] [--websockets] [--verbose]
-               [--log_interval LOG_INTERVAL] [--pyarrow_info]
+usage: main.py [-h] [--model MODEL] [--dataset DATASET] [--batch_size BATCH_SIZE] [--test_batch_size TEST_BATCH_SIZE] [--preprocess] [--fp_only] [--public] [--test] [--train] [--epochs EPOCHS]
+               [--lr LR] [--websockets] [--verbose] [--log_interval LOG_INTERVAL] [--comm_info] [--pyarrow_info]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --model MODEL         model to use for inference (network1, network2, lenet,
-                        alexnet, vgg16, resnet18)
-  --dataset DATASET     dataset to use (mnist, cifar10, hymenoptera, tiny-
-                        imagenet)
+  --model MODEL         model to use for inference (network1, network2, lenet, alexnet, vgg16, resnet18)
+  --dataset DATASET     dataset to use (mnist, cifar10, hymenoptera, tiny-imagenet)
   --batch_size BATCH_SIZE
-                        size of the batch to use
+                        size of the batch to use. Default 128.
   --test_batch_size TEST_BATCH_SIZE
                         size of the batch to use
   --preprocess          [only for speed test] preprocess data or not
-  --fp_only             Don't secret share values, just convert them to fix
-                        precision
+  --fp_only             Don't secret share values, just convert them to fix precision
+  --public              [needs --train] Train without fix precision or secret sharing
   --test                run testing on the complete test dataset
   --train               run training for n epochs
-  --epochs EPOCHS       [needs --train] number of epochs to train on
-  --lr LR               [needs --train] learning rate of the SGD
-  --websockets          use PyGrid nodes instead of a virtual network. (nodes
-                        are launched automatically)
+  --epochs EPOCHS       [needs --train] number of epochs to train on. Default 15.
+  --lr LR               [needs --train] learning rate of the SGD. Default 0.01.
+  --websockets          use PyGrid nodes instead of a virtual network. (nodes are launched automatically)
   --verbose             show extra information and metrics
   --log_interval LOG_INTERVAL
-                        [needs --test or --train] log intermediate metrics
-                        every n batches
+                        [needs --test or --train] log intermediate metrics every n batches. Default 10.
+  --comm_info           Print communication information
   --pyarrow_info        print information about PyArrow usage and failure
 ```
 

@@ -132,7 +132,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--batch_size",
         type=int,
-        help="size of the batch to use",
+        help="size of the batch to use. Default 128.",
         default=128,
     )
     parser.add_argument(
@@ -175,14 +175,14 @@ if __name__ == "__main__":
     parser.add_argument(
         "--epochs",
         type=int,
-        help="[needs --train] number of epochs to train on",
+        help="[needs --train] number of epochs to train on. Default 15.",
         default=15,
     )
 
     parser.add_argument(
         "--lr",
         type=float,
-        help="[needs --train] learning rate of the SGD",
+        help="[needs --train] learning rate of the SGD. Default 0.01.",
         default=0.01,
     )
 
@@ -192,12 +192,16 @@ if __name__ == "__main__":
         action="store_true",
     )
 
-    parser.add_argument("--verbose", help="show extra information and metrics", action="store_true")
+    parser.add_argument(
+        "--verbose",
+        help="show extra information and metrics",
+        action="store_true",
+    )
 
     parser.add_argument(
         "--log_interval",
         type=int,
-        help="[needs --test or --train] log intermediate metrics every n batches",
+        help="[needs --test or --train] log intermediate metrics every n batches. Default 10.",
         default=10,
     )
 
@@ -255,7 +259,7 @@ if __name__ == "__main__":
         comm_info = cmd_args.comm_info
 
         epochs = cmd_args.epochs
-        lr = 0.1
+        lr = cmd_args.lr
 
         public = cmd_args.public
         fp_only = cmd_args.fp_only

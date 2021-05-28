@@ -15,7 +15,7 @@ class Network1(nn.Module):
         self.fc3 = nn.Linear(128, out_features)
 
     def forward(self, x):
-        x = x.view(-1, 784)
+        x = x.reshape(-1, 784)
         x = self.fc1(x)
         x = F.relu(x)
         x = self.fc2(x)
@@ -40,7 +40,7 @@ class Network2(nn.Module):
         x = self.conv2(x)
         x = F.max_pool2d(x, kernel_size=2, stride=2)
         x = F.relu(x)  ## inverted!
-        x = x.view(-1, 256)
+        x = x.reshape(-1, 256)
         x = self.fc1(x)
         x = F.relu(x)
         x = self.fc2(x)
@@ -63,7 +63,7 @@ class LeNet(nn.Module):
         x = self.conv2(x)
         x = F.max_pool2d(x, kernel_size=2, stride=2)
         x = F.relu(x)  # switched!!
-        x = x.view(-1, 800)
+        x = x.reshape(-1, 800)
         x = self.fc1(x)
         x = F.relu(x)
         x = self.fc2(x)
