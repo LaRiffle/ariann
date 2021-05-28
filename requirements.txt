@@ -1,0 +1,2 @@
+git+git://github.com/OpenMined/PySyft@a73b13aa84a8a9ad0923d87ff1b6c8c2facdeaa6
+opencv-python

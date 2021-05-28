@@ -70,14 +70,36 @@ optional arguments:
 
 We assume the AriaNN code has been put at the home directory: `~/ariann`
 
-### 1. PySyft
+### With Docker
+
+```
+docker-compose up
+```
+
+Connect to the container:
+```
+docker exec -ti ariann /bin/bash 
+```
+
+You can already start running the first experiments! Try:
+``` 
+python main.py --model alexnet --dataset cifar10 --batch_size 128 --preprocess
+```
+
+_To perform cross-node execution, you will need to install from source instead._
+
+### From Source
+
+Alternatively, you can also install the code from source.
+
+#### 1. PySyft
 
 Download PySyft from GitHub using the `ryffel/ariaNN` branch and install in editable mode:
 ```
 cd ~
 git clone https://github.com/OpenMined/PySyft.git
 cd PySyft
-git checkout 0b699987b98da82316efaa481074a3b721806465
+git checkout a73b13aa84a8a9ad0923d87ff1b6c8c2facdeaa6
 pip install -e .
 ```
 You can already start running the first experiments! Try:
@@ -87,7 +109,7 @@ python main.py --model alexnet --dataset cifar10 --batch_size 128 --preprocess
 ```
 But there are still some extras steps to have the whole setup!
 
-### 2. PyGrid (for cross-node execution only)
+#### 2. PyGrid (for cross-node execution only)
 To run experiments across  different nodes, download PyGrid from GitHub.
 
 ```
