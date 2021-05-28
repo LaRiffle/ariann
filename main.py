@@ -188,6 +188,13 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
+        "--momentum",
+        type=float,
+        help="[needs --train] momentum of the SGD. Default 0.9.",
+        default=0.9,
+    )
+
+    parser.add_argument(
         "--websockets",
         help="use PyGrid nodes instead of a virtual network. (nodes are launched automatically)",
         action="store_true",
@@ -237,6 +244,9 @@ if __name__ == "__main__":
     if not cmd_args.train:
         assert not cmd_args.public, "--public is used only for training"
 
+    if cmd_args.lr or cmd_args.momentum:
+        assert cmd_args.train, "Can't use --lr or --momentum without --train"
+
     if cmd_args.pyarrow_info:
         sy.pyarrow_info = True
 
@@ -261,6 +271,7 @@ if __name__ == "__main__":
 
         epochs = cmd_args.epochs
         lr = cmd_args.lr
+        momentum = cmd_args.momentum
 
         public = cmd_args.public
         fp_only = cmd_args.fp_only

@@ -40,7 +40,7 @@ python main.py --model network2 --dataset mnist --train --epochs 15 --lr 0.01
 
 ```
 usage: main.py [-h] [--model MODEL] [--dataset DATASET] [--batch_size BATCH_SIZE] [--test_batch_size TEST_BATCH_SIZE] [--preprocess] [--fp_only] [--public] [--test] [--train] [--epochs EPOCHS]
-               [--lr LR] [--websockets] [--verbose] [--log_interval LOG_INTERVAL] [--comm_info] [--pyarrow_info]
+               [--lr LR] [--momentum MOMENTUM] [--websockets] [--verbose] [--log_interval LOG_INTERVAL] [--comm_info] [--pyarrow_info]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -57,6 +57,7 @@ optional arguments:
   --train               run training for n epochs
   --epochs EPOCHS       [needs --train] number of epochs to train on. Default 15.
   --lr LR               [needs --train] learning rate of the SGD. Default 0.01.
+  --momentum MOMENTUM   [needs --train] momentum of the SGD. Default 0.9.
   --websockets          use PyGrid nodes instead of a virtual network. (nodes are launched automatically)
   --verbose             show extra information and metrics
   --log_interval LOG_INTERVAL
