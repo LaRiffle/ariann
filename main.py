@@ -82,7 +82,8 @@ def run(args):
 
     if args.train:
         for epoch in range(args.epochs):
-            optimizer = optim.SGD(model.parameters(), lr=args.lr)
+            optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum)
+
             if not args.public:
                 optimizer = optimizer.fix_precision(
                     precision_fractional=args.precision_fractional, dtype=args.dtype

@@ -45,10 +45,11 @@ def train(args, model, private_train_loader, optimizer, epoch):
 
         output = model(data)
 
-        # loss = F.nll_loss(output, target)  <-- not possible here
-        batch_size = output.shape[0]
-
-        loss = ((output - target) ** 2).sum() / batch_size
+        if args.model == "network2":
+            loss = output.cross_entropy(target)
+        else:
+            batch_size = output.shape[0]
+            loss = ((output - target) ** 2).sum() / batch_size
 
         loss.backward()
 
