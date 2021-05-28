@@ -244,9 +244,6 @@ if __name__ == "__main__":
     if not cmd_args.train:
         assert not cmd_args.public, "--public is used only for training"
 
-    if cmd_args.lr or cmd_args.momentum:
-        assert cmd_args.train, "Can't use --lr or --momentum without --train"
-
     if cmd_args.pyarrow_info:
         sy.pyarrow_info = True
 
@@ -278,7 +275,7 @@ if __name__ == "__main__":
         requires_grad = cmd_args.train
         dtype = "long"
         protocol = "fss"
-        precision_fractional = 4
+        precision_fractional = 5 if cmd_args.train else 4
 
     args = Arguments()
 
