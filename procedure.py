@@ -41,27 +41,41 @@ def train(args, model, private_train_loader, optimizer, epoch):
     for batch_idx, (data, target) in enumerate(private_train_loader):
         start_time = time.time()
 
-        optimizer.zero_grad()
+        def forward(optimizer, model, data, target):
+            optimizer.zero_grad()
 
-        output = model(data)
+            output = model(data)
 
-        if args.model == "network2":
-            loss = output.cross_entropy(target)
-        else:
-            batch_size = output.shape[0]
-            loss = ((output - target) ** 2).sum() / batch_size
+            if args.model == "network2":
+                loss = output.cross_entropy(target)
+            else:
+                batch_size = output.shape[0]
+                loss = ((output - target) ** 2).sum() / batch_size
 
-        loss.backward()
+            return loss
+
+        loss = [10e10]
+        loss_dec = torch.tensor([10e10])
+
+        while loss_dec.abs() > 10:
+            loss[0] = forward(optimizer, model, data, target)
+
+            loss_dec = loss[0].copy()
+            if loss_dec.is_wrapper:
+                if not args.fp_only:
+                    loss_dec = loss_dec.get()
+                loss_dec = loss_dec.float_precision()
+
+            if loss_dec.abs() > 10:
+                print(f'⚠️ #{batch_idx} loss:{loss_dec.item()} RETRY...')
+
+        loss[0].backward()
 
         optimizer.step()
         tot_time = time.time() - start_time
         times.append(tot_time)
 
         if batch_idx % args.log_interval == 0:
-            if loss.is_wrapper:
-                if not args.fp_only:
-                    loss = loss.get()
-                loss = loss.float_precision()
             if args.train:
                 print(
                     "Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}\tTime: {:.3f}s ({:.3f}s/item) [{:.3f}]".format(
@@ -69,7 +83,7 @@ def train(args, model, private_train_loader, optimizer, epoch):
                         batch_idx * args.batch_size,
                         n_items,
                         100.0 * batch_idx / len(private_train_loader),
-                        loss.item(),
+                        loss_dec.item(),
                         tot_time,
                         tot_time / args.batch_size,
                         args.batch_size,
