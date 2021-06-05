@@ -46,13 +46,13 @@ def train(args, model, private_train_loader, optimizer, epoch):
 
             output = model(data)
 
-            if args.model == "network2":
-                loss = output.cross_entropy(target)
+            if args.model in {"network2", "alexnet", "vgg16"}:
+                loss_enc = output.cross_entropy(target)
             else:
                 batch_size = output.shape[0]
-                loss = ((output - target) ** 2).sum() / batch_size
+                loss_enc = ((output - target) ** 2).sum() / batch_size
 
-            return loss
+            return loss_enc
 
         loss = [10e10]
         loss_dec = torch.tensor([10e10])
