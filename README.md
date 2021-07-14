@@ -68,8 +68,6 @@ optional arguments:
 
 ## Installation
 
-We assume the AriaNN code has been put at the home directory: `~/ariann`
-
 ### With Docker
 
 ```
@@ -86,11 +84,16 @@ You can already start running the first experiments! Try:
 python main.py --model alexnet --dataset cifar10 --batch_size 128 --preprocess
 ```
 
-_To perform cross-node execution, you will need to install from source instead._
+To reproduce the paper experiments, see the [USAGE.md](./USAGE.md) page.
+
+_To perform cross-node execution (the WAN setting), you will need to install from source instead._
 
 ### From Source
 
 Alternatively, you can also install the code from source.
+
+We assume the AriaNN code has been put at the home directory: `~/ariann`
+
 
 #### 1. PySyft
 
